@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Encrypter</title>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --background-color: #f8f9fa;
+            --card-color: #ffffff;
+            --text-color: #212529;
+            --error-color: #e63946;
+            --success-color: #2a9d8f;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: var(--card-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 15px;
+            width: 98%;
+            max-width: 900px;
+            height: 98vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            font-size: 24px;
+        }
+
+        .info-banner {
+            background-color: rgba(67, 97, 238, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 6px 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .info-icon {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        textarea,
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        textarea {
+            height: 110px;
+            resize: none;
+        }
+
+        textarea:focus,
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            flex: 1;
+            font-size: 13px;
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        button.secondary {
+            background-color: #6c757d;
+        }
+
+        button.secondary:hover {
+            background-color: #5a6268;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .alert {
+            padding: 8px;
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+            display: none;
+            font-size: 14px;
+        }
+
+        .alert-error {
+            background-color: rgba(230, 57, 70, 0.1);
+            color: var(--error-color);
+            border: 1px solid rgba(230, 57, 70, 0.3);
+        }
+
+        .alert-success {
+            background-color: rgba(42, 157, 143, 0.1);
+            color: var(--success-color);
+            border: 1px solid rgba(42, 157, 143, 0.3);
+        }
+
+        .copy-btn {
+            display: inline-block;
+            padding: 4px 10px;
+            background-color: #eee;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 3px;
+            margin-right: 5px;
+        }
+
+        .copy-btn:hover {
+            background-color: #ddd;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tab {
+            padding: 6px 15px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+
+        .tab.active {
+            border-color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .tab:hover:not(.active) {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .tooltip {
+            cursor: help;
+            position: relative;
+        }
+
+        .key-input-container {
+            display: flex;
+        }
+
+        .toggle-password {
+            flex: 0 0 60px;
+            margin-left: 8px;
+            background: #eee;
+            color: #333;
+        }
+
+        .toggle-password:hover {
+            background: #ddd;
+            transform: none;
+        }
+
+        .key-strength {
+            margin-top: 4px;
+            font-size: 12px;
+        }
+
+        .strength-bar {
+            height: 6px;
+            background-color: #eee;
+            border-radius: 4px;
+            margin-bottom: 2px;
+            overflow: hidden;
+        }
+
+        .strength-level {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        .weak {
+            background-color: #e63946;
+        }
+
+        .medium {
+            background-color: #f4a261;
+        }
+
+        .good {
+            background-color: #2a9d8f;
+        }
+
+        .strong {
+            background-color: #218838;
+        }
+
+        .button-group button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button-group button:before {
+            margin-right: 6px;
+        }
+
+        #encryptBtn:before {
+            content: "🔒";
+        }
+
+        #decryptBtn:before {
+            content: "🔓";
+        }
+
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .dual-column {
+            display: flex;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .dual-column {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <script>
+        function padKey(e) { var e = (new TextEncoder).encode(e), t = new Uint8Array(16); return t.set(e.slice(0, 16)), t } async function encryptJson() { try { var t = document.getElementById("encryptBtn"), n = t.textContent, e = (t.textContent = "Encrypting...", t.disabled = !0, document.getElementById("alert"), document.getElementById("jsonInput").value), r = document.getElementById("keyInput").value; if (e && r) { try { JSON.parse(e) } catch (e) { return showAlert("Invalid JSON format: " + e.message, "error"), t.textContent = n, void (t.disabled = !1) } var o = await crypto.subtle.importKey("raw", padKey(r), { name: "AES-GCM" }, !1, ["encrypt"]), d = crypto.getRandomValues(new Uint8Array(12)), a = await crypto.subtle.encrypt({ name: "AES-GCM", iv: d }, o, (new TextEncoder).encode(e)), c = JSON.stringify({ iv: Array.from(d), data: Array.from(new Uint8Array(a)) }, null, 2); document.getElementById("output").value = c, showAlert("JSON encrypted successfully!", "success") } else showAlert("Please provide both JSON data and an encryption key", "error"); t.textContent = n, t.disabled = !1 } catch (e) { document.getElementById("encryptBtn").textContent = "Encrypt JSON", document.getElementById("encryptBtn").disabled = !1, showAlert("Encryption error: " + e.message, "error"), console.error(e) } } async function decryptJson() { try { const decryptBtn = document.getElementById("decryptBtn"); var t = decryptBtn.textContent, n = (decryptBtn.textContent = "Decrypting...", decryptBtn.disabled = !0, document.getElementById("output").value), r = document.getElementById("keyInput").value; if (n && r) { let e; try { if (!(e = JSON.parse(n)).iv || !e.data) throw new Error("Invalid encrypted data format") } catch (e) { return showAlert("Invalid encrypted data format: " + e.message, "error"), decryptBtn.textContent = t, void (decryptBtn.disabled = !1) } var o = await crypto.subtle.importKey("raw", padKey(r), { name: "AES-GCM" }, !1, ["decrypt"]), d = new Uint8Array(e.iv), a = new Uint8Array(e.data), c = await crypto.subtle.decrypt({ name: "AES-GCM", iv: d }, o, a), l = (new TextDecoder).decode(c); try { var s = JSON.parse(l); document.getElementById("jsonInput").value = JSON.stringify(s, null, 2) } catch (e) { document.getElementById("jsonInput").value = l } showAlert("JSON decrypted successfully!", "success") } else showAlert("Please provide both encrypted data and the correct decryption key", "error"); decryptBtn.textContent = t, decryptBtn.disabled = !1 } catch (e) { decryptBtn.textContent = "Decrypt JSON", decryptBtn.disabled = !1, showAlert("Decryption error: " + e.message, "error"), console.error(e) } } function showAlert(e, t) { const n = document.getElementById("alert"); n.textContent = e, n.style.display = "block", n.className = "error" === t ? "alert alert-error" : "alert alert-success", setTimeout(() => { n.style.display = "none" }, 5e3) } function copyToClipboard(e) { document.getElementById(e).select(), document.execCommand("copy"); const t = document.querySelector(`button[onclick="copyToClipboard('${e}')"]`), n = t.textContent; t.textContent = "Copied!", setTimeout(() => { t.textContent = n }, 2e3) } function formatJson() { try { var e = document.getElementById("jsonInput"), t = JSON.parse(e.value); e.value = JSON.stringify(t, null, 2), showAlert("JSON formatted successfully!", "success") } catch (e) { showAlert("Invalid JSON format: " + e.message, "error") } } function clearFields() { document.getElementById("jsonInput").value = "", document.getElementById("output").value = "", document.getElementById("alert").style.display = "none" } function switchTab(e) { var t = document.getElementsByClassName("tab"); for (let e = 0; e < t.length; e++)t[e].classList.remove("active"); document.getElementById(e).classList.add("active"), "encryptTab" === e ? (document.getElementById("encryptBtn").style.display = "block", document.getElementById("decryptBtn").style.display = "none") : (document.getElementById("encryptBtn").style.display = "none", document.getElementById("decryptBtn").style.display = "block") } function togglePasswordVisibility() { var e = document.getElementById("keyInput"), t = document.querySelector(".toggle-password"); "password" === e.type ? (e.type = "text", t.textContent = "Hide") : (e.type = "password", t.textContent = "Show") } function checkKeyStrength() { var r = document.getElementById("keyInput").value, o = document.getElementById("keyStrength"); if (r) { let e = 0, t = (8 <= r.length && (e += 25), r.match(/[A-Z]/) && (e += 25), r.match(/[0-9]/) && (e += 25), r.match(/[^A-Za-z0-9]/) && (e += 25), ""), n = ""; n = e <= 25 ? (t = "weak", "Weak") : e <= 50 ? (t = "medium", "Medium") : e <= 75 ? (t = "good", "Good") : (t = "strong", "Strong"), o.innerHTML = `<div class="strength-bar"><div class="strength-level ${t}" style="width:${e}%"></div></div><span>${n}</span>` } else o.innerHTML = "" } document.addEventListener("DOMContentLoaded", function () { document.getElementById("keyInput").addEventListener("input", checkKeyStrength) });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>JSON Encrypter</h1>
+
+        <div class="info-banner">
+            <p><i class="info-icon">ℹ️</i> Securely encrypt your JSON data with AES-GCM encryption. Keep your encryption
+                key safe to decrypt later.</p>
+        </div>
+
+        <div class="tabs">
+            <div id="encryptTab" class="tab active" onclick="switchTab('encryptTab')">Encrypt</div>
+            <div id="decryptTab" class="tab" onclick="switchTab('decryptTab')">Decrypt</div>
+        </div>
+
+        <div id="alert" class="alert"></div>
+
+        <div class="content-area">
+            <div class="dual-column">
+                <div class="column">
+                    <div class="form-group">
+                        <label for="jsonInput">JSON Data:</label>
+                        <textarea id="jsonInput" placeholder="Enter your JSON data here"></textarea>
+                        <div class="form-actions">
+                            <button class="copy-btn" onclick="copyToClipboard('jsonInput')">Copy</button>
+                            <button class="copy-btn" onclick="formatJson()">Format JSON</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="form-group">
+                        <label for="output">Result:</label>
+                        <textarea id="output" placeholder="Encrypted/Decrypted output will appear here"
+                            readonly></textarea>
+                        <button class="copy-btn" onclick="copyToClipboard('output')">Copy</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="keyInput">Encryption Key: <span class="tooltip"
+                        title="This key is used to encrypt and decrypt your data. Keep it safe!">ℹ️</span></label>
+                <div class="key-input-container">
+                    <input type="password" id="keyInput" placeholder="Enter your encryption key">
+                    <button class="toggle-password" onclick="togglePasswordVisibility()">Show</button>
+                </div>
+                <div class="key-strength" id="keyStrength"></div>
+            </div>
+
+            <div class="button-group">
+                <button id="encryptBtn" onclick="encryptJson()">Encrypt JSON</button>
+                <button id="decryptBtn" onclick="decryptJson()" style="display: none;">Decrypt JSON</button>
+                <button class="secondary" onclick="clearFields()">Clear All</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

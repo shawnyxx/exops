@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image to RGB Matrix</title>
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --secondary-color: #3f37c9;
+      --background-color: #f8f9fa;
+      --card-color: #ffffff;
+      --text-color: #212529;
+      --error-color: #e63946;
+      --success-color: #2a9d8f;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    html,
+    body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.5;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: var(--card-color);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 15px;
+      width: 98%;
+      max-width: 900px;
+      height: 98vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+      font-size: 24px;
+    }
+
+    .info-banner {
+      background-color: rgba(67, 97, 238, 0.1);
+      border-left: 4px solid var(--primary-color);
+      padding: 6px 10px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .info-icon {
+      margin-right: 8px;
+      font-size: 16px;
+    }
+
+    .content-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .dual-column {
+      display: flex;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    button {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: var(--transition);
+      margin: 5px 0;
+      font-size: 13px;
+    }
+
+    button:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-1px);
+    }
+
+    input[type="file"] {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      font-size: 14px;
+      background-color: white;
+    }
+
+    canvas {
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      margin-top: 10px;
+      background-color: #f5f5f5;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 8px;
+      margin: 10px 0;
+    }
+
+    .button-group button {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .button-group button:before {
+      margin-right: 6px;
+    }
+
+    #uploadBtn:before {
+      content: "📁";
+    }
+
+    #downloadBtn:before {
+      content: "💾";
+    }
+
+    #loadJsonBtn:before {
+      content: "📂";
+    }
+
+    .alert {
+      padding: 8px;
+      border-radius: var(--border-radius);
+      margin-bottom: 10px;
+      display: none;
+      font-size: 14px;
+    }
+
+    .alert-error {
+      background-color: rgba(230, 57, 70, 0.1);
+      color: var(--error-color);
+      border: 1px solid rgba(230, 57, 70, 0.3);
+    }
+
+    .alert-success {
+      background-color: rgba(42, 157, 143, 0.1);
+      color: var(--success-color);
+      border: 1px solid rgba(42, 157, 143, 0.3);
+    }
+
+    .custom-file-upload {
+      border: 1px solid #ddd;
+      display: inline-block;
+      padding: 8px 16px;
+      cursor: pointer;
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+      width: 100%;
+      margin-bottom: 10px;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .custom-file-upload:hover {
+      background-color: #e9ecef;
+    }
+
+    .image-info {
+      font-size: 14px;
+      margin-top: 10px;
+      padding: 8px;
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+    }
+
+    @media (max-width: 768px) {
+      .dual-column {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Image to RGB Matrix</h1>
+
+    <div class="info-banner">
+      <p><i class="info-icon">ℹ️</i> Convert images to RGB matrices and save as JSON. You can also load JSON files to
+        reconstruct images.</p>
+    </div>
+
+    <div id="alert" class="alert"></div>
+
+    <div class="content-area">
+      <div class="dual-column">
+        <div class="column">
+          <h3>Input</h3>
+          <div class="custom-file-upload">
+            <label for="fileInput">Choose Image File</label>
+            <input type="file" id="fileInput" accept="image/*" style="display: none;" />
+          </div>
+          <div class="button-group">
+            <button id="uploadBtn">Upload Image</button>
+            <button id="downloadBtn">Download JSON</button>
+          </div>
+          <div id="imageInfo" class="image-info">No image loaded</div>
+        </div>
+        <div class="column">
+          <h3>Output/Preview</h3>
+          <div class="custom-file-upload">
+            <label for="jsonInput">Load JSON File</label>
+            <input type="file" id="jsonInput" accept=".json" style="display: none;" />
+          </div>
+          <button id="loadJsonBtn">Load JSON to Canvas</button>
+          <canvas id="canvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelector('label[for="fileInput"]').addEventListener("click", function () { document.getElementById("fileInput").click() }), document.querySelector('label[for="jsonInput"]').addEventListener("click", function () { document.getElementById("jsonInput").click() }), document.getElementById("uploadBtn").addEventListener("click", function () { document.getElementById("fileInput").click() }), document.getElementById("loadJsonBtn").addEventListener("click", function () { document.getElementById("jsonInput").click() }), document.getElementById("fileInput").addEventListener("change", handleFile), document.getElementById("downloadBtn").addEventListener("click", downloadJson), document.getElementById("jsonInput").addEventListener("change", handleJsonFile); let rgbMatrix = []; function showAlert(e, t) { const n = document.getElementById("alert"); n.textContent = e, n.style.display = "block", n.className = "error" === t ? "alert alert-error" : "alert alert-success", setTimeout(() => { n.style.display = "none" }, 5e3) } function handleFile(e) {
+      const a = e.target.files[0]; a && (a.type.match("image.*") ? ((e = new FileReader).onload = function (e) {
+        const n = new Image; n.src = e.target.result, n.onload = function () {
+          var e = document.getElementById("canvas"), t = e.getContext("2d"), e = (e.width = n.width, e.height = n.height, t.drawImage(n, 0, 0), t.getImageData(0, 0, n.width, n.height)); rgbMatrix = convertToRgbMatrix(e), document.getElementById("imageInfo").innerHTML = `
+            Image loaded: ${a.name}<br>
+            Dimensions: ${n.width} × ${n.height} px<br>
+            Matrix size: ${rgbMatrix.length} × ${rgbMatrix[0].length} elements
+          `, showAlert("Image loaded successfully!", "success")
+        }
+      }, e.readAsDataURL(a)) : showAlert("Please select an image file", "error"))
+    } function convertToRgbMatrix(n) { var e = []; for (let t = 0; t < n.height; t++) { var a = []; for (let e = 0; e < n.width; e++) { var l = 4 * (t * n.width + e), r = n.data[l], o = n.data[1 + l], l = n.data[2 + l]; a.push([r, o, l]) } e.push(a) } return e } function downloadJson() { var e, t; rgbMatrix.length ? (e = JSON.stringify(rgbMatrix), e = new Blob([e], { type: "application/json" }), e = URL.createObjectURL(e), (t = document.createElement("a")).href = e, t.download = "rgb_matrix.json", t.click(), showAlert("JSON file downloaded successfully!", "success")) : showAlert("No image data to download", "error") } function handleJsonFile(e) {
+      const t = e.target.files[0]; t && ((e = new FileReader).onload = function (e) {
+        try {
+          drawMatrix(rgbMatrix = JSON.parse(e.target.result)), document.getElementById("imageInfo").innerHTML = `
+            JSON loaded: ${t.name}<br>
+            Matrix size: ${rgbMatrix.length} × ${rgbMatrix[0].length} elements
+          `, showAlert("JSON data loaded successfully!", "success")
+        } catch (e) { showAlert("Error parsing JSON file: " + e.message, "error") }
+      }, e.readAsText(t))
+    } function drawMatrix(n) { var e = document.getElementById("canvas"), a = e.getContext("2d"), l = n.length, r = n[0].length; e.width = r, e.height = l; for (let t = 0; t < l; t++)for (let e = 0; e < r; e++) { var [o, d, i] = n[t][e]; a.fillStyle = `rgb(${o}, ${d}, ${i})`, a.fillRect(e, t, 1, 1) } }
+  </script>
+</body>
+
+</html>
