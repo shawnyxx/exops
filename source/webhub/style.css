@@ -1,0 +1,42 @@
+
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+
+
+
+/* Classes */
+
+/* Colors */
+.black {
+    background: black;
+}
+
+.text-black {
+    color: black;
+}
+
+.white {
+    background: white;
+}
+
+.text-white {
+    color: white;
+}
+
+
+/* Dimensions */
+.fullscreen {
+    width: 100vw;
+    height: 100vh;
+}
+
+
+
+/* Positions */
+.fixed {
+    position: fixed;
+}

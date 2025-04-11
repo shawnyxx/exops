@@ -1,0 +1,11 @@
+{
+  "name": "webhub",
+  "version": "1.0.0",
+  "description": "just tests",
+  "main": "main.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "crypto-browserify": "^3.12.1"
+  }
+}
