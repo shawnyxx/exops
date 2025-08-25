@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style>
+        body {
+            padding: 50px;
+        }
+        .carousel {
+            width: 100%;
+            overflow-x: auto;   
+            scroll-behavior: smooth;
+            anchor-name: --carousel;
+
+            scroll-snap-type: x mandatory;
+        }
+
+        .carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .carousel::scroll-button(right), .carousel::scroll-button(left) {
+            content: 'Right';
+            border: none;
+            background-color: black;
+            cursor: pointer;
+            color: white;
+            border: 2px solid white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            padding: 5px;
+            position: fixed;
+            position-anchor: --carousel;
+            position-area: right center;
+            translate: -50%;
+        }
+
+        .carousel::scroll-button(left) {
+            content: 'Left';
+            position-area: left center;
+            translate: 50%;
+        }
+        
+        .card {
+            scroll-snap-align: start;
+            flex: 0 0 100%;
+            margin: 10px;
+            min-height: 25em;
+            transition: transform 0.3s ease;
+        }
+    </style>
+    
+</head>
+<body>
+    <div id="carousel" class="carousel flex flex-row items-start justify-start">
+        <div id="card-1" class="card flex items-center justify-center bg-gray-700 rounded-lg"><h3>Card 1</h3></div>
+        <div id="card-2" class="card flex items-center justify-center bg-gray-700 rounded-lg"><h3>Card 2</h3></div>
+        <div id="card-3" class="card flex items-center justify-center bg-gray-700 rounded-lg"><h3>Card 3</h3></div>
+        <div id="card-4" class="card flex items-center justify-center bg-gray-700 rounded-lg"><h3>Card 4</h3></div>
+        <div id="card-5" class="card flex items-center justify-center bg-gray-700 rounded-lg"><h3>Card 5</h3></div>
+        <div id="card-6" class="card flex items-center justify-center bg-gray-700 rounded-lg"><h3>Card 6</h3></div>
+        <div id="card-7" class="card flex items-center justify-center bg-gray-700 rounded-lg"><h3>Card 7</h3></div>
+        <div id="card-8" class="card flex items-center justify-center bg-gray-700 rounded-lg"><h3>Card 8</h3></div>
+        <div id="card-9" class="card flex items-center justify-center bg-gray-700 rounded-lg"><h3>Card 9</h3></div>
+        <div id="card-10" class="card flex items-center justify-center bg-gray-700 rounded-lg"><h3>Card 10</h3></div>
+        <div id="card-11" class="card flex items-center justify-center bg-gray-700 rounded-lg"><h3>Card 11</h3></div>
+        <div id="card-12" class="card flex items-center justify-center bg-gray-700 rounded-lg"><h3>Card 12</h3></div>
+        <div id="card-13" class="card flex items-center justify-center bg-gray-700 rounded-lg"><h3>Card 13</h3></div>
+        <div id="card-14" class="card flex items-center justify-center bg-gray-700 rounded-lg"><h3>Card 14</h3></div>
+        <div id="card-15" class="card flex items-center justify-center bg-gray-700 rounded-lg"><h3>Card 15</h3></div>
+        <div id="card-16" class="card flex items-center justify-center bg-gray-700 rounded-lg"><h3>Card 16</h3></div>
+        <div id="card-17" class="card flex items-center justify-center bg-gray-700 rounded-lg"><h3>Card 17</h3></div>
+        <div id="card-18" class="card flex items-center justify-center bg-gray-700 rounded-lg"><h3>Card 18</h3></div>
+        <div id="card-19" class="card flex items-center justify-center bg-gray-700 rounded-lg"><h3>Card 19</h3></div>
+    </div>
+</body>
+</html>

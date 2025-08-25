@@ -26,8 +26,10 @@ I am of course paying for the music I use publicaly, and I am a paying [deezer](
 
 Using their simple powershell command, you are able to download a whole playlist, album, or an artist's whole music discography. I am not pushing forward to do that, nor ecxo games is, therefore the making process of this software is all for research purposes to prevent scrappers from reaching the content the community will post on our gaming platform.
 
-![Screenshot 1](./mediadiddy/Screenshot%201.png)
-![Screenshot 2](./mediadiddy/Screenshot%202.png)
+<img width="1602" height="1073" alt="Screenshot 1" src="https://github.com/user-attachments/assets/8c0eeaf9-498f-49e9-928f-5032b1eb565b" />
+<img width="1300" height="762" alt="Screenshot 2" src="https://github.com/user-attachments/assets/16593a36-cf56-419c-89fa-99e630c5cc9d" />
+
+It was recently converted into a Java program and bundled with all the required packages, so no more trouble, run it and use it immediately.
 
 
 

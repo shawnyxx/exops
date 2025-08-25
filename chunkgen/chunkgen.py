@@ -15,6 +15,7 @@ pan_offset_y = 0
 is_panning = False
 last_x = 0
 last_y = 0
+chunk_size = 5
 
 ZOOM_IN_LIMIT = 200.0
 VERSION_NUMBER = 1.0
@@ -157,8 +158,8 @@ def update_info_panel():
 def center_on_selected_chunk():
     if selected_chunk_index is not None:
         chunk = chunks[selected_chunk_index]
-        center_lat = (chunk['min_lat'] + chunk['max_lat']) / 2
-        center_lon = (chunk['min_lon'] + chunk['max_lon']) / 2
+        center_lat = (chunk['min_lat'] + chunk['max_lat']) / 2 # Center latitude
+        center_lon = (chunk['min_lon'] + chunk['max_lon']) / 2 # Center longitude
         go_to_location(center_lat, center_lon)
 
 def calculate_area():
@@ -168,16 +169,16 @@ def calculate_area():
         min_lon = float(entry_min_lon.get())
 
         # Snap to grid
-        min_lat = snap_to_grid(min_lat, 5 / 111)
-        min_lon = snap_to_grid(min_lon, 5 / (111 * math.cos(math.radians(min_lat))))
+        min_lat = snap_to_grid(min_lat, chunk_size / 111)
+        min_lon = snap_to_grid(min_lon, chunk_size / (111 * math.cos(math.radians(min_lat))))
 
         # Calculate degrees per km
         degree_per_km_lat = 1 / 111
         degree_per_km_lon = 1 / (111 * math.cos(math.radians(min_lat)))
 
         # Calculate max latitude and longitude for a 5km x 5km square
-        max_lat = min_lat + (5 * degree_per_km_lat)
-        max_lon = min_lon + (5 * degree_per_km_lon)
+        max_lat = min_lat + (chunk_size * degree_per_km_lat)
+        max_lon = min_lon + (chunk_size * degree_per_km_lon)
 
         # Check for overlap
         for chunk in chunks:
