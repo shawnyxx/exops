@@ -17,23 +17,47 @@ gaining application.
 
 ## Our projects
 
-### Media Diddy
+# Media Diddy Suite
 
-#### An easy to use spotify downloader - By [@Shawnyxx](https://github.com/shawnyxx)
+## A suite of easy-to-use media downloading softwares - By [@Shawnyxx](https://github.com/shawnyxx)
 
-But what is it for?
-I am of course paying for the music I use publicaly, and I am a paying [deezer](https://www.deezer.com/) customer. But honestly, I loved apple music and I wont pay for both. What's the link with spotify, well spotify is one of the weak cousin of the music streaming industry. They are very easy to scrap since with fame comes hate, and hate led them to multiple paying and non-paying customers working together to put together a scrapper tool that allows anyone to download their music with the full metadata, lyrics, and even album covers. The name of the package is called [spot-dl](https://github.com/spotDL/spotify-downloader).
+This software suite started as a simple media downloader for spotify but recently had a newborn brother coming into its family. Media Diddy now has two softwares attached to its name.
 
-Using their simple powershell command, you are able to download a whole playlist, album, or an artist's whole music discography. I am not pushing forward to do that, nor ecxo games is, therefore the making process of this software is all for research purposes to prevent scrappers from reaching the content the community will post on our gaming platform.
+### **Youtube Diddy:**
 
-![Screenshot 1](./mediadiddy/Screenshot%201.png)
-![Screenshot 2](./mediadiddy/Screenshot%202.png)
+Youtube Diddy is, as its name suggest, a youtube downloader. It allows you to save youtube videos in any format. Easy to use, it requires a link, and an optionnal file name.
+
+<img width="1492" height="632" alt="Screenshot 1" src="https://github.com/user-attachments/assets/9626edb4-6af2-478d-bd7c-876df159af9a" />
+
+[Download Now](https://github.com/shawnyxx/exops/releases/download/2025.5/youtubediddy.exe)
+
+#### Here is a quick example of Youtube Diddy in action
+
+https://github.com/user-attachments/assets/9b3d32c9-fe08-48f8-a281-c2df837e2676
 
 
 
-### Fishbot
+### **Spotify Diddy:**
 
-#### Job automation using Computer Vision on the roblox game Bloxburg - By [@Shawnyxx](https://github.com/shawnyxx)
+Spotify Diddy is pretty similar to Youtube Diddy, it allows you to save spotify songs to your computer but also to organize your music library into a very organized local music library.
+
+Coming with multiple sorting options, interchangeable lyrics source, cover art support, and much more, Spotify Diddy, bundled with spotdl, allows you to download any song/playlists you want and let the software organize it for you.
+
+<img width="1602" height="1073" alt="Screenshot 1" src="https://github.com/user-attachments/assets/8c0eeaf9-498f-49e9-928f-5032b1eb565b" />
+
+[Download Now](https://github.com/shawnyxx/exops/releases/download/2025.5/spotifydiddy.exe)
+
+#### Here is a quick example of Spotify Diddy in action
+
+https://github.com/user-attachments/assets/f8cef525-6e6a-4e24-96e1-fa453150250f
+
+It was recently converted into a Java program and bundled with all the required packages, so no more trouble, run it and use it immediately.
+
+
+
+# Fishbot
+
+### Job automation using Computer Vision on the roblox game Bloxburg - By [@Shawnyxx](https://github.com/shawnyxx)
 
 This project was real fun to do and I cannot indulge people saying that this is hacking. I can of course say that it's the intended way doing things but this is not hacking and since I have spent over 70 hours developing this, I cannot really say that I made profit of it, since I would've made over 70 Millions in the game if I would've worked it like a human.
 
